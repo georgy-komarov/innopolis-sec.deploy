@@ -26,7 +26,7 @@ SECRET_KEY = 'j7sa)xdj3tj1!r7-t(!ju(sj%5im2a!_+fsezo&o*l!v$ds04_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '188.130.155.99', 'innopolis-sec2.ml']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '188.130.155.99', 'innopolis-sec2.ml']
 
 # Application definition
 
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'teamboard',
-    'adminboard'
+    'adminboard',
+    'logs'
 ]
 
 MIDDLEWARE = [
