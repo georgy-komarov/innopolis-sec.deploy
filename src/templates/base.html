@@ -19,54 +19,56 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="{% if full_width_page %}container-fluid{% else %}container{% endif %}">
         <a class="navbar-brand" href="/">CTFZone</a>
-        {% block navbar %} {% endblock navbar %}
-        {% block user %}
-            <div class="nav-right">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/teams">Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/scoreboard">Scoreboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/challenges">Challenges</a>
+                </li>
+            </ul>
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-user"></span>
-                                <span id="navbar_user_name">{% if user.get_full_name %}
-                                    {{ user.get_full_name }} {% else %} {{ user }} {% endif %}</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-username"
-                                 style="position: absolute; left: auto; right: 0px;">
-                                <h6 class="dropdown-header">
-                                    {% if user.get_full_name %}{{ user.get_full_name }}{% else %}
-                                        {{ user }}{% endif %}</h6>
-                                <a class="dropdown-item"
-                                   href="/profile">Profile</a>
-                                {% if user.is_staff %}
-                                    <a class="dropdown-item"
-                                       href="/admin">Admin panel</a>
-                                {% endif %}
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item"
-                                   href="/password_change/">Change password</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item"
-                                   href="/logout/">Log out</a>
-                            </div>
-                        </li>
-                    </ul>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <span class="fa fa-user"></span>
+                            <span id="navbar_user_name">{% if user.get_full_name %}
+                                {{ user.get_full_name }} {% else %} {{ user }} {% endif %}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <h6 class="dropdown-header">
+                                {% if user.get_full_name %}{{ user.get_full_name }}{% else %}
+                                    {{ user }}{% endif %}</h6>
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            {% if user.is_staff %}
+                                <a class="dropdown-item" href="/admin">Admin panel</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="/password_change/">Change password</a>
+                            <a class="dropdown-item" href="/logout/">Log out</a>
+                        </div>
+                    </li>
                 {% else %}
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="/login/">Log in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/register/">Register</a>
-                        </li>
-                    </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
                 {% endif %}
-            </div>
-        {% endblock %}
+            </ul>
+        </div>
     </div>
 </nav>
 
