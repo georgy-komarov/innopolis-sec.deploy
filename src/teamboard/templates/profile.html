@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    {% if user.get_full_name %}
+                        {{ user.get_full_name }}
+                    {% else %}
+                        {{ user }}{% endif %}
+                </h4>
+                <small class="text-muted">{{ user.email }}</small>
+                {% if has_team %}
+                    <p>Team member: {{ user.profile.team.name }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% if not has_team %}
+            <div class="card">
+                <div class="card-body">
+                    <h5>Join team using invite code</h5>
+                    <label for="id_invite">Enter code:</label>
+                    <div class="col-md-12">
+                        <form action="/profile/" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="form-group row">
+                                        <input class="form-control" id="id_invite" name="invite" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-dark">OK</button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if status and message %}
+                            <div class="row">
+                                <div class="col-9 alert{% if status == 'ok' %} alert-success{% else %} alert-danger{% endif %}">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

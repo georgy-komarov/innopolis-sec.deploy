@@ -19,4 +19,5 @@ import teamboard.views
 
 urlpatterns = [
     path('', teamboard.views.index),
+    path('profile/', teamboard.views.profile)
 ]

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ValidationError
@@ -76,3 +77,33 @@ class Register(FormView):
 
 def index(request):
     return render(request, 'index.html')
+
+
+@login_required
+def profile(request):
+    profile = request.user.profile
+
+    has_team = bool(profile.team)
+    team_name = profile.team.name if has_team else ''
+
+    message = ''
+    status = 'fail'
+
+    if request.method == "POST":
+        invite = request.POST['invite']
+
+        if invite and not Team.objects.filter(invite=invite).exists():
+            message = 'Invite code not valid.'
+        else:
+            team = Team.objects.filter(invite=invite)[0]
+            profile.team = team
+            profile.save()
+            message = f'You joined team {team.name}.'
+            status = 'ok'
+    return render(request, 'profile.html',
+                  context={'has_team': has_team, 'team_name': team_name, 'message': message, 'status': status})
+
+
+@login_required
+def teams(request):
+    render(request, 'base.html')

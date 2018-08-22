@@ -4,7 +4,7 @@ from teamboard.models import Team, Profile
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['name', 'score', 'banned']
+    list_display = ['name', 'score', 'not_banned']
     list_filter = ['score']
 
 
