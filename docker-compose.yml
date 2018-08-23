@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  app:
+    environment:
+    - DJANGO_SETTINGS_MODULE=ctf.settings_docker  # Do not change
+    - DATABASE_URL=postgres://ctf:V2Nk8QXp9HxxxwRoccvrFpo89tozoj0P@database:5432/app_db  # postgres://USER:PASSWORD@HOST:PORT/NAME
+    - NAME=InnoCTF  # CTF name, not more than 50 characters
+    - DOMAIN=innopolis-sec2.ml  # Domain name used, not more than 100 characters
+    - SU_PASS=cNyH3VA7C2iPmtRA  # Make it strong
+    image: app
+    ports:
+      - 8000:8000
+    build: ./
+    restart: always
+    volumes:
+      - .:/src
+    depends_on:
+      - database
+    links:
+    - database
+  nginx:
+    image: nginx:latest
+    ports:
+    - 80:80
+    volumes:
+    - .:/src
+    - ./config/nginx:/etc/nginx/conf.d
+    - ./config/uwsgi:/etc/uwsgi
+    depends_on:
+    - app
+    links:
+      - app
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: ctf
+      POSTGRES_PASSWORD: V2Nk8QXp9HxxxwRoccvrFpo89tozoj0P
+    restart: always
+    expose:
+    - "5432"

@@ -1,5 +1,5 @@
 # innopolis-sec.deploy
-### Local deployment
+### Local deployment (dev server)
 ```
 git clone https://github.com/georgy-komarov/innopolis-sec.deploy.git
 
@@ -16,3 +16,9 @@ echo 'from django.contrib.auth.models import User; from teamboard.models import 
 python manage.py runserver 0.0.0.0:8000 -v3 --traceback
 ```
 You can now login with user `su` and password `pass`
+
+### Docker compose
+* You must set environment variables in **docker-compose.yml**
+* Configure email backend in `src/ctf/settings_docker.py`
+
+Then run `docker-compose up --build`
