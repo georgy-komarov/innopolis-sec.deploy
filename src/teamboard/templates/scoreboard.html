@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Scoreboard{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">Scoreboard:</div>
+        <table class="table">
+            <tbody>
+            {% for team in teams %}
+                <tr>
+                    <th>{{ forloop.counter }}.</th>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.score }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

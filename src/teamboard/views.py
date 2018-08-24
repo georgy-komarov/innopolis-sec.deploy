@@ -66,7 +66,7 @@ class Register(FormView):
         form.save()
         user = User.objects.filter(username=username)[0]
 
-        if invite:  # TODO Add user to team automatically
+        if invite:
             team = Team.objects.filter(invite=invite)[0]
             profile = Profile(user=user, team=team)
         else:
@@ -88,22 +88,43 @@ def profile(request):
 
     message = ''
     status = 'fail'
+    box = 'invite'
 
     if request.method == "POST":
-        invite = request.POST['invite']
+        box = 'invite'
 
-        if invite and not Team.objects.filter(invite=invite).exists():
+        invite = request.POST.get('invite')
+        team_name = request.POST.get('team')
+
+        if team_name:
+            box = 'team'
+            if Team.objects.filter(name=team_name).exists():
+                message = 'Team with this name already exists. Please choose another name.'
+            elif Team.objects.filter(invite=invite).exists():
+                message = 'Invite code already exists. Please choose another invite code.'
+            else:
+                Team(name=team_name, invite=invite).save()
+                profile.team = Team.objects.get(name=team_name)
+                profile.save()
+
+                message = f'You created team {team_name}.'
+                status = 'ok'
+        elif invite and not Team.objects.filter(invite=invite).exists():
             message = 'Invite code not valid.'
+
         else:
-            team = Team.objects.filter(invite=invite)[0]
+            team = Team.objects.get(invite=invite)
             profile.team = team
             profile.save()
+
             message = f'You joined team {team.name}.'
             status = 'ok'
+
     return render(request, 'profile.html',
-                  context={'has_team': has_team, 'team_name': team_name, 'message': message, 'status': status})
+                  context={'has_team': has_team, 'team_name': team_name, 'message': message, 'status': status,
+                           'box': box})
 
 
 @login_required
-def teams(request):
-    render(request, 'base.html')
+def scoreboard(request):
+    return render(request, 'scoreboard.html', context={'teams': Team.objects.order_by('-score')})

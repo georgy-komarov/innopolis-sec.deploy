@@ -36,9 +36,43 @@
                                 </div>
                             </div>
                         </form>
-                        {% if status and message %}
+                        {% if status and message and box == 'invite' %}
                             <div class="row">
                                 <div class="col-9 alert{% if status == 'ok' %} alert-success{% else %} alert-danger{% endif %}">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <p class="align-self-center">or</p>
+            <div class="card">
+                <div class="card-body">
+                    <h5>Create new team</h5>
+                    <div class="col-md-12">
+                        <form action="/profile/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id_invite">Enter name:</label>
+                                <input class="form-control" id="id_invite" name="invite" type="text" required>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="id_invite">Enter invite your teammates will use to join your team:</label>
+                                <div class="col-9">
+                                    <div class="form-group row">
+                                        <input class="form-control" id="id_team" name="team" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-dark">OK</button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if status and message and box == 'team' %}
+                            <div class="row">
+                                <div class="col-12 alert{% if status == 'ok' %} alert-success{% else %} alert-danger{% endif %}">
                                     {{ message }}
                                 </div>
                             </div>
