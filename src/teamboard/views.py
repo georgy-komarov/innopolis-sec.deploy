@@ -128,3 +128,8 @@ def profile(request):
 @login_required
 def scoreboard(request):
     return render(request, 'scoreboard.html', context={'teams': Team.objects.order_by('-score')})
+
+
+@login_required
+def tasks(request):
+    return render(request, 'tasks.html')
