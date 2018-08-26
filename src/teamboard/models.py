@@ -6,9 +6,9 @@ from adminboard.models import Task
 
 class Team(models.Model):
     name = models.CharField(db_index=True, max_length=50, null=False, blank=False, unique=True)
-    invite = models.CharField(max_length=64, null=False, blank=False, unique=True)
+    invite = models.CharField(max_length=50, null=False, blank=False, unique=True)
     score = models.PositiveIntegerField(blank=False, default=0)
-    solved_tasks = models.ManyToManyField(Task, null=True, blank=True)
+    solved_tasks = models.ManyToManyField(Task, blank=True)
     not_banned = models.BooleanField(null=False, blank=False, default=True)
     updated_at = models.DateTimeField(auto_now=True)
 
