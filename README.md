@@ -1,7 +1,7 @@
 # innopolis-sec.deploy
 ### Local deployment (dev server)
 ```
-git clone https://github.com/georgy-komarov/innopolis-sec.deploy.git
+git clone https://github.com/georgy-komarov/innopolis-sec.deploy.git && cd innopolis-sec.deploy
 
 cd src/
 virtualenv -p python3 ../.env
