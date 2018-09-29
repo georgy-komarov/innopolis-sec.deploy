@@ -7,7 +7,7 @@ cd src/
 virtualenv -p python3 ../.env
 source ../.env/bin/activate
 pip install pip setuptools -U
-pip install -r requirements.txt
+pip install -r ../requirements.txt
 
 python manage.py makemigrations
 python manage.py migrate
